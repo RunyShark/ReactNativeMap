@@ -1,6 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {HomeScreen} from '../index';
+import {MapScreen, PermissionsScreen} from '../index';
 
 const Stack = createStackNavigator();
 
@@ -12,9 +12,14 @@ export const Navigator = () => {
         cardStyle: {backgroundColor: 'white'},
       }}>
       <Stack.Screen
-        name={'HomeScreen'}
-        component={HomeScreen}
-        options={{title: 'HomeScreen'}}
+        name={'PermissionsScreen'}
+        component={PermissionsScreen}
+        options={{title: 'PermissionsScreen'}}
+      />
+      <Stack.Screen
+        name={'MapScreen'}
+        component={MapScreen}
+        options={{title: 'MapScreen'}}
       />
     </Stack.Navigator>
   );
