@@ -23,7 +23,9 @@ export const PermissionsProvider = ({
   children: JSX.Element[] | JSX.Element;
 }) => {
   const [permissions, setPermissions] = useState(permissionsInitState);
-  const askLocationsPermission = () => {};
+  const askLocationsPermission = () => {
+    // setPermissions();
+  };
   const checkLocationsPermission = () => {};
 
   return (
