@@ -1,24 +1,21 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-
-import {LoadingScreen} from '../pages/LoadingScreen';
+import {HomeScreen} from '../index';
 
 const Stack = createStackNavigator();
 
 export const Navigator = () => {
-  const {permissions} = useContext(PermissionsContext);
-
-  if (permissions.locationStatus === 'unavailable') {
-    return <LoadingScreen />;
-  }
-
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
-        cardStyle: {
-          backgroundColor: 'white',
-        },
-      }}></Stack.Navigator>
+        cardStyle: {backgroundColor: 'white'},
+      }}>
+      <Stack.Screen
+        name={'HomeScreen'}
+        component={HomeScreen}
+        options={{title: 'HomeScreen'}}
+      />
+    </Stack.Navigator>
   );
 };
