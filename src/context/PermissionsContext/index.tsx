@@ -1,6 +1,14 @@
-import React, {createContext, useState} from 'react';
-import {PermissionStatus} from 'react-native-permissions';
-
+/* eslint-disable curly */
+/* eslint-disable no-self-compare */
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {createContext, useEffect, useState} from 'react';
+import {AppState, Platform} from 'react-native';
+import {
+  check,
+  request,
+  PERMISSIONS,
+  PermissionStatus,
+} from 'react-native-permissions';
 export interface PermissionsContextState {
   locationStatus: PermissionStatus;
 }
@@ -23,10 +31,47 @@ export const PermissionsProvider = ({
   children: JSX.Element[] | JSX.Element;
 }) => {
   const [permissions, setPermissions] = useState(permissionsInitState);
-  const askLocationsPermission = () => {
-    // setPermissions();
+  const {ANDROID} = PERMISSIONS;
+  const {addEventListener} = AppState;
+
+  useEffect(() => {
+    addEventListener('change', state => {
+      if (state !== state) return;
+      checkLocationsPermission();
+    });
+  }, []);
+
+  let permissionStatus: PermissionStatus;
+
+  const askLocationsPermission = async () => {
+    try {
+      if (Platform.OS === 'android') {
+        permissionStatus = await request(ANDROID.ACCESS_FINE_LOCATION);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
+    setPermissions({
+      ...permissions,
+      locationStatus: permissionStatus,
+    });
   };
-  const checkLocationsPermission = () => {};
+
+  const checkLocationsPermission = async () => {
+    try {
+      if (Platform.OS === 'android') {
+        permissionStatus = await check(ANDROID.ACCESS_FINE_LOCATION);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
+    setPermissions({
+      ...permissions,
+      locationStatus: permissionStatus,
+    });
+  };
 
   return (
     <PermissionsContext.Provider
