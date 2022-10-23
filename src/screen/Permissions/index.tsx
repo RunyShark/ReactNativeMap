@@ -16,8 +16,12 @@ export const PermissionsScreen = () => {
   let permissionStatus: PermissionStatus;
 
   const checkLocationPermission = async () => {
-    if (Platform.OS === 'android') {
-      permissionStatus = await request(ANDROID.ACCESS_FINE_LOCATION);
+    try {
+      if (Platform.OS === 'android') {
+        permissionStatus = await request(ANDROID.ACCESS_FINE_LOCATION);
+      }
+    } catch (error) {
+      console.log(error);
     }
     console.log({permissionStatus});
   };
